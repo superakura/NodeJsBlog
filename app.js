@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
+var multer = require('multer');
 var MongoStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
@@ -36,6 +37,12 @@ app.use(session({
         host: settings.host,
         port: settings.port
     })
+}));
+app.use(multer({
+    dest: './public/uploadFile',
+    rename: function(fieldname, filename) {
+        return filename;
+    }
 }));
 
 app.use('/', routes);

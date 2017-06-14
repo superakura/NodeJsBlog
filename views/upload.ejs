@@ -1,0 +1,11 @@
+<%- include header%>
+
+    <form action="/upload" method="POST" role="form" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file1">选择文件</label>
+            <input type="file" class="form-control" name="file1">
+        </div>
+        <button type="submit" class="btn btn-primary">上传</button>
+    </form>
+
+    <%- include footer%>
