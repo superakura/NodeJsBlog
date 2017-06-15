@@ -1,12 +1,20 @@
 <%- include header%>
-    <div class="row">
-        <div class="col-md-12">
-            <small class="text-muted">
-					作者：<%= post.name %>  |  日期：<%= post.time.minute %>
-				</small>
-            <div class="well well-sm">
-                <%- post.post %>
+    <% if(user && (user.name==post.name)) { %>
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-info" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">编辑</a>
+                <a class="btn btn-danger" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a>
             </div>
         </div>
-    </div>
-    <%- include footer%>
+        <% } %>
+            <div class="row">
+                <div class="col-md-12">
+                    <small class="text-muted">
+					作者：<%= post.name %>  |  日期：<%= post.time.minute %>
+				</small>
+                    <div class="well well-sm">
+                        <%- post.post %>
+                    </div>
+                </div>
+            </div>
+            <%- include footer%>
