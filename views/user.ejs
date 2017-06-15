@@ -1,0 +1,23 @@
+<%- include header%>
+    <div class="row">
+        <div class="col-md-12">
+            <% posts.forEach(function(post,index) { %>
+                <p>
+                    <h2>
+                        <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
+                            <%= post.title %>
+                        </a>
+                    </h2>
+                </p>
+                <small class="text-muted">
+					作者：<a href="/u/<%= post.name %>"><%= post.name %></a>   |  
+                    日期：<%= post.time.minute %>
+				</small>
+                <div class="well well-sm">
+                    <%- post.post %>
+                </div>
+                <hr>
+                <% }) %>
+        </div>
+    </div>
+    <%- include footer%>

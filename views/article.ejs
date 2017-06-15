@@ -1,0 +1,12 @@
+<%- include header%>
+    <div class="row">
+        <div class="col-md-12">
+            <small class="text-muted">
+					作者：<%= post.name %>  |  日期：<%= post.time.minute %>
+				</small>
+            <div class="well well-sm">
+                <%- post.post %>
+            </div>
+        </div>
+    </div>
+    <%- include footer%>
