@@ -23,14 +23,19 @@ function checkNotLogin(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-    Post.getAll(null, function(err, posts) {
+    //判断是否第一页，并把请求的页数转换成number类型
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    Post.getByPage(null, page, function(err, posts, total) {
         if (err) {
             posts = [];
         }
         res.render('index', {
             title: 'Express',
-            user: req.session.user,
             posts: posts,
+            page: page,
+            isFirstPage: (page - 1) == 0,
+            isLastPage: ((page - 1) * 5 + posts.length) == total,
+            user: req.session.user,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         });
@@ -167,12 +172,13 @@ router.post('/upload', function(req, res) {
 });
 
 router.get('/u/:name', function(req, res) {
+    var page = req.query.p ? parseInt(req.query.p) : 1;
     User.get(req.params.name, function(err, user) {
         if (!user) {
             req.flash('error', '用户不存在！');
             return res.redirect('/');
         }
-        Post.getAll(user.name, function(err, posts) {
+        Post.getByPage(user.name, page, function(err, posts, total) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/');
@@ -180,6 +186,9 @@ router.get('/u/:name', function(req, res) {
             res.render('user', {
                 title: user.name,
                 posts: posts,
+                page: page,
+                isFirstPage: (page - 1) == 0,
+                isLastPage: ((page - 1) * 5 + posts.length) == total,
                 user: req.session.user,
                 success: req.flash('success').toString(),
                 error: req.flash('error').toString()

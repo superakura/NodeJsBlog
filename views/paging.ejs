@@ -1,0 +1,11 @@
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <% if(!isFirstPage) { %>
+            <a href="?p=<%= page-1%>" class="btn btn-default">上一页</a>
+            <% } %>
+                <% if(!isLastPage) { %>
+                    <a href="?p=<%= page+1%>" class="btn btn-default">下一页</a>
+                    <% } %>
+    </div>
+</div>
