@@ -24,6 +24,9 @@
                     <div class="well well-sm">
                         <%- post.post %>
                     </div>
+                    <small>
+                    阅读：<%= post.pv%> | 评论：<%= post.comments.length%>
+                </small>
                 </div>
             </div>
             <%- include comment%>
