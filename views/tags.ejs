@@ -1,0 +1,9 @@
+<%- include header%>
+    <% posts.forEach(function(tag,index){ %>
+        <h3>
+            <a href="/tags/<%= tag %>">
+                <%= tag %>
+            </a>
+        </h3>
+        <% }) %>
+            <%- include footer%>
