@@ -3,6 +3,7 @@
 <% post.comments.forEach(function (comment,index) { %>
     <div class="row">
         <div class="col-md-12">
+            <img src="<%= comment.head %>">
             <a href="<%= comment.website %>">
                 <%= comment.name %>
             </a>
