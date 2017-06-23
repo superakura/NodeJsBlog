@@ -12,6 +12,9 @@ var MongoStore = require('connect-mongo')(session);
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var settings = require('./settings');
+var fs = require('fs');
+var accessLog = fs.createWriteStream('access.log', { flags: 'a' });
+var errorLog = fs.createWriteStream('error.log', { flags: 'a' });
 
 var app = express();
 
@@ -22,10 +25,18 @@ app.set('view engine', 'ejs');
 app.use(flash());
 app.use(favicon());
 app.use(logger('dev'));
+app.use(logger({ stream: accessLog }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(err, req, res, next) {
+    var meta = '[' + new Date() + ']' + req.url + '\n';
+    errorLog.write(meta + err.stack + '\n');
+    next();
+});
+
 app.use(session({
     resave: true,
     saveUninitialized: true,
@@ -38,6 +49,7 @@ app.use(session({
         port: settings.port
     })
 }));
+
 app.use(multer({
     dest: './public/uploadFile',
     rename: function(fieldname, filename) {
