@@ -172,6 +172,22 @@ router.post('/upload', function(req, res) {
     res.redirect('/upload');
 });
 
+router.get('/search', function(req, res) {
+    Post.search(req.query.keyword, function(err, posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('search', {
+            title: '搜索:' + req.query.keyword,
+            posts: posts,
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
+    });
+});
+
 router.get('/u/:name', function(req, res) {
     var page = req.query.p ? parseInt(req.query.p) : 1;
     User.get(req.params.name, function(err, user) {
@@ -326,5 +342,15 @@ router.get('/tags/:tag', function(req, res) {
         });
     });
 });
+
+router.get('/links', function(req, res) {
+    res.render('links', {
+        title: '友情链接',
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+    });
+})
+
 
 module.exports = router;
