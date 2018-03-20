@@ -22,45 +22,46 @@
 
     <div class="row">
         <div class="col-md-12">
-            <% posts.forEach(function(post,index) { %>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="pull-left">
-                            <h2>
-                                <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
-                                    <%= post.title %>
-                                </a>
-                            </h2>
-                        </div>
-                        <div class="pull-right">
-                            <a href="/u/<%= post.name %>"><img src="<%= post.head %>"></a>
+            <%- include paging%>
+                <% posts.forEach(function(post,index) { %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <h2>
+                                    <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
+                                        <%= post.title %>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/u/<%= post.name %>"><img src="<%= post.head %>"></a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="text-muted">
-                    作者：
-                    <a href="/u/<%= post.name %>">
-                        <%= post.name %>
-                    </a> | 日期：
-                    <%= post.time.minute %> | 标签：
-                        <% post.tags.forEach(function(tag,index){ %>
-                            <% if(tag){%>
-                                <a href="/tags/<%= tag %>">
+                    <div class="text-muted">
+                        作者：
+                        <a href="/u/<%= post.name %>">
+                            <%= post.name %>
+                        </a> | 日期：
+                        <%= post.time.minute %> | 标签：
+                            <% post.tags.forEach(function(tag,index){ %>
+                                <% if(tag){%>
+                                    <a href="/tags/<%= tag %>">
                                 [<%= tag %>]
                             </a>&nbsp;&nbsp;
-                                <% }%>
-                                    <% }) %>
-                </div>
+                                    <% }%>
+                                        <% }) %>
+                    </div>
 
-                <div class="well well-sm">
-                    <%- post.post %>
-                </div>
-                <small>
+                    <div class="well well-sm">
+                        <%- post.post %>
+                    </div>
+                    <small>
                     阅读：<%= post.pv%> | 评论：<%= post.comments.length%>
                 </small>
-                <hr>
-                <% }) %>
+                    <hr>
+                    <% }) %>
         </div>
     </div>
     <%- include paging%>
